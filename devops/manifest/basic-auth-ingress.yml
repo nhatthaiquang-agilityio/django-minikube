@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: ingress-with-auth
+  annotations:
+    # Note: nginx: 0.9.0 then using
+    # nginx.ingress.kubernetes.io/auth-type: basic
+    # nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    # nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - Example"
+
+    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+
+    # type of authentication
+    ingress.kubernetes.io/auth-type: basic
+
+    # name of the secret that contains the user/password definitions
+    ingress.kubernetes.io/auth-secret: basic-auth
+
+    # message to display with an appropiate context why the authentication is required
+    ingress.kubernetes.io/auth-realm: "Authentication Required - Example"
+
+spec:
+  rules:
+  - host: mysite.com
+    http:
+      paths:
+      - backend:
+          serviceName: web-service
+          servicePort: 8000
+        path: /

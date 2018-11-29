@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web-service
+  labels:
+    run: web-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: web-service
+    spec:
+      containers:
+      - name: web-service
+        image: nhatthai/mysite_django:latest
+        ports:
+        - containerPort: 8000
+          protocol: TCP
